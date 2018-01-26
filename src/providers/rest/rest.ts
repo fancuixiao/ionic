@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Http, Response } from '@angular/http';
+import {  Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -24,12 +24,15 @@ export class RestProvider {
       .catch(this.handleError);
   }
 
-  private extractData(res: Response) {
-    let body = res.json();
+  private extractData(res: Response | any) {
+    console.log('d');
+    console.log(res);
+    let body = res;
     return body || {};
   }
 
   private handleError(error: Response | any) {
+    console.log('--err--',error);
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';
@@ -38,7 +41,7 @@ export class RestProvider {
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-    console.error(errMsg);
+    console.error(errMsg, 'err');
     return Observable.throw(errMsg)
   }
 }
